@@ -139,21 +139,11 @@ function QuizStep({ onQuizComplete, onBack }) {
   );
 }
 
-function ContractUploadStep({ onNext, onBack }) {
-  return (
-    <section className="step-page">
-      <div className="hero">
-        <div className="subtitle">Step 2: Contract Upload</div>
-        <h2 className="title">Analyze Your Contract</h2>
-        <div className="description">[Contract Upload UI Placeholder]</div>
-        <div className="step-actions">
-          <button className="btn" onClick={onBack}>Back</button>
-          <button className="btn btn-large" onClick={onNext}>Analyze/Skip</button>
-        </div>
-      </div>
-    </section>
-  );
-}
+import ContractUpload from "./ContractUpload";
+
+import ContractUpload from "./ContractUpload";
+
+// function ContractUploadStep maintained below
 
 function ResultsDashboardStep({ onNext, onBack }) {
   return (
