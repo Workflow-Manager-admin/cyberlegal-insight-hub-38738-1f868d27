@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import CyberQuiz from "./CyberQuiz";
+import ContractUpload from "./ContractUpload";
 
 /**
  * ProgressBar and stepper for visualizing app flow steps.
@@ -139,11 +140,10 @@ function QuizStep({ onQuizComplete, onBack }) {
   );
 }
 
-import ContractUpload from "./ContractUpload";
-
-import ContractUpload from "./ContractUpload";
-
-// function ContractUploadStep maintained below
+// PUBLIC_INTERFACE
+function ContractUploadStep({ onNext, onBack }) {
+  return <ContractUpload onNext={onNext} onBack={onBack} />;
+}
 
 function ResultsDashboardStep({ onNext, onBack }) {
   return (
