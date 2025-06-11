@@ -87,14 +87,15 @@ function FlowProgressBar({ step, steps }) {
 }
 
 /**
- * Placeholder components for each step of the multi-step flow.
+ * WelcomeStep – Branded Welcome Screen for CyberLegal Insight Hub.
+ * Includes prominent branding, an avatar illustration placeholder, introductory text, and a clear CTA button.
  */
 function WelcomeStep({ onNext }) {
   return (
     <section className="step-page">
       <div className="welcome-hero">
         <div className="avatar-illustration-wrapper">
-          {/* Placeholder for avatar illustration */}
+          {/* Avatar illustration placeholder for branding & friendliness */}
           <div className="avatar-illustration">
             <span role="img" aria-label="CyberLegal avatar" style={{ fontSize: 68, display: "block" }}>
               👩‍💻
@@ -102,14 +103,25 @@ function WelcomeStep({ onNext }) {
             <span className="avatar-bg-decoration" />
           </div>
         </div>
-        <div className="subtitle">Welcome to <span style={{ color: 'var(--base-light)', fontWeight: 600 }}>CyberLegal Insight Hub</span></div>
-        <h1 className="title" style={{ marginTop: 0, marginBottom: 12}}>
-          Digital & Legal Safety.<br /> One Unified Flow.
+        <div className="subtitle">
+          Welcome to <span style={{ color: 'var(--base-light)', fontWeight: 600 }}>CyberLegal Insight Hub</span>
+        </div>
+        <h1 className="title" style={{ marginTop: 0, marginBottom: 12 }}>
+          Digital & Legal Safety.<br />One Unified Flow.
         </h1>
         <div className="description" style={{ fontWeight: 400 }}>
-          Uncover your digital habits, assess your legal awareness, and receive a <span style={{ color: 'var(--base-light)', fontWeight: 500 }}>personalized Digital Safety Index</span> and step-by-step improvement roadmap. <br /> Begin your journey to digital peace of mind—with help from Kavia AI.
+          Uncover your digital habits, assess your legal awareness, and receive a{" "}
+          <span style={{ color: "var(--base-light)", fontWeight: 500 }}>
+            personalized Digital Safety Index
+          </span>
+          {" "}and step-by-step improvement roadmap.<br />
+          Begin your journey to digital peace of mind—with help from <b>Kavia AI</b>.
         </div>
-        <button className="btn btn-large welcome-cta" onClick={onNext}>
+        <button
+          className="btn btn-large welcome-cta"
+          onClick={onNext}
+          aria-label="Start CyberLegal Insight Assessment"
+        >
           <span style={{ fontWeight: 600 }}>Start Assessment</span>
         </button>
       </div>
