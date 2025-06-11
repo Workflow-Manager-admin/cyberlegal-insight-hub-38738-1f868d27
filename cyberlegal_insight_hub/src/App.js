@@ -297,16 +297,116 @@ function ResultsDashboardStep({ onNext, onBack, quizAnswers, contractInput }) {
   );
 }
 
+/**
+ * ThankYouStep – Friendly branded follow-up with retake and subscription/CTA.
+ * @param {function} onRestart
+ */
 function ThankYouStep({ onRestart }) {
+  // PUBLIC_INTERFACE
+  // Email subscription CTA placeholder (stub logic)
+  const [email, setEmail] = React.useState("");
+  const [submitted, setSubmitted] = React.useState(false);
+  function handleSubscribe(e) {
+    e.preventDefault();
+    if (email.trim().length > 4 && email.includes("@")) {
+      setSubmitted(true);
+      // Simulate subscription. In production, this would post to backend or external API.
+    }
+  }
   return (
     <section className="step-page">
-      <div className="hero">
-        <div className="subtitle">Thank You!</div>
-        <h2 className="title">Assessment Complete</h2>
-        <div className="description">
-          [Thank You Placeholder. Add retake and subscribe actions here.]
+      <div className="hero" style={{
+        background: "rgba(0,255,255,0.044)",
+        borderRadius: 10,
+        padding: "38px 12px 45px 12px",
+        boxShadow: "0 2px 20px 0 rgba(0,255,255,0.05)",
+        maxWidth: 520,
+        margin: "0 auto"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", flexDirection: "column", marginBottom: 10 }}>
+          <div className="avatar-illustration" style={{ marginBottom: 7, marginTop: 2 }}>
+            <span role="img" aria-label="celebration" style={{ fontSize: 58 }}>🎉</span>
+            <span className="avatar-bg-decoration" />
+          </div>
         </div>
-        <button className="btn btn-large" onClick={onRestart}>Retake Assessment</button>
+        <div className="subtitle" style={{ color: "var(--base-light)", marginBottom: 3, fontWeight: 600 }}>Thank You!</div>
+        <h2 className="title" style={{ margin: "0 0 13px 0", fontSize: "2.5rem" }}>Assessment Complete</h2>
+        <div className="description" style={{ marginBottom: 21, fontSize: "1.16rem", color: "#bffdf7" }}>
+          Well done! You're one step closer to digital peace of mind.
+          <br />
+          Track your progress, revisit personalized tips, and continue improving your digital & legal awareness with Kavia AI.
+        </div>
+        <div className="step-actions" style={{ marginBottom: 22 }}>
+          <button className="btn btn-large" style={{ minWidth: 145, fontWeight: 600 }} onClick={onRestart}>
+            &#8635; Retake Assessment
+          </button>
+        </div>
+        <div style={{
+          margin: "20px auto 0 auto",
+          background: "rgba(0,255,255,0.055)",
+          border: "1.3px solid var(--border-color)",
+          borderRadius: 11,
+          padding: "24px 19px 18px 19px",
+          boxShadow: "0 2px 15px 0 rgba(0,255,255,0.04)",
+          maxWidth: 410,
+          color: "#d8f9ff",
+          textAlign: "center"
+        }}>
+          <div style={{ fontWeight: 600, color: "#00ffff", fontSize: "1.145rem", marginBottom: 8 }}>
+            Stay in the Loop for CyberLegal Tips!
+          </div>
+          <div style={{ fontSize: "1.03rem", marginBottom: 13, color: "#b5ebfe" }}>
+            Get exclusive updates, guidance, and digital safety resources straight to your inbox.
+          </div>
+          <form
+            style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}
+            onSubmit={handleSubscribe}
+            autoComplete="off"
+          >
+            <input
+              type="email"
+              placeholder="Your email address"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setSubmitted(false); }}
+              style={{
+                border: "1.3px solid var(--base-light)",
+                borderRadius: 7,
+                background: "rgba(0,255,255,0.012)",
+                padding: "10px 13px",
+                fontSize: "1.07rem",
+                color: "#001136",
+                marginBottom: 0,
+                outline: submitted ? "2px solid #00fa9a" : undefined,
+                minWidth: "210px"
+              }}
+              disabled={submitted}
+              required
+              aria-label="Email for updates"
+            />
+            <button
+              className="btn btn-large"
+              type="submit"
+              style={{
+                minWidth: 120,
+                background: submitted ? "#91ffd1" : "var(--base-light)",
+                color: "#001136",
+                fontWeight: 600,
+                cursor: submitted ? "not-allowed" : "pointer"
+              }}
+              disabled={submitted}
+            >
+              {submitted ? "Subscribed!" : "Subscribe"}
+            </button>
+          </form>
+          {submitted && (
+            <div style={{ color: "#10ffb9", fontWeight: 500, fontSize: "1rem", marginTop: 7 }}>
+              You’re on our list! Check your inbox for updates soon.
+            </div>
+          )}
+        </div>
+        <div style={{ margin: "30px 0 0 0", fontSize: "1.02rem", color: "#6de8cc" }}>
+          <span role="img" aria-label="wave">👋</span> Questions or feedback? Reach out: <span style={{ color: "#00ffff" }}>hello@kavia.ai</span>
+        </div>
       </div>
     </section>
   );
