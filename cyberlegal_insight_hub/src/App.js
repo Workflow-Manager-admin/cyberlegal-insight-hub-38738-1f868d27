@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import CyberQuiz from "./CyberQuiz";
 
 /**
  * ProgressBar and stepper for visualizing app flow steps.
@@ -88,7 +89,6 @@ function FlowProgressBar({ step, steps }) {
 
 /**
  * WelcomeStep – Branded Welcome Screen for CyberLegal Insight Hub.
- * Includes prominent branding, an avatar illustration placeholder, introductory text, and a clear CTA button.
  */
 function WelcomeStep({ onNext }) {
   return (
@@ -129,19 +129,13 @@ function WelcomeStep({ onNext }) {
   );
 }
 
-function QuizStep({ onNext, onBack }) {
+function QuizStep({ onQuizComplete, onBack }) {
+  // This step will call onQuizComplete when finished with the user responses
   return (
-    <section className="step-page">
-      <div className="hero">
-        <div className="subtitle">Step 1: Cyber Behavior Quiz</div>
-        <h2 className="title">Digital Hygiene Check</h2>
-        <div className="description">[Quiz UI Placeholder]</div>
-        <div className="step-actions">
-          <button className="btn" onClick={onBack}>Back</button>
-          <button className="btn btn-large" onClick={onNext}>Next</button>
-        </div>
-      </div>
-    </section>
+    <CyberQuiz
+      onBack={onBack}
+      onComplete={onQuizComplete}
+    />
   );
 }
 
@@ -199,6 +193,8 @@ function ThankYouStep({ onRestart }) {
 function App() {
   // 0: Welcome, 1: Quiz, 2: Contract Upload, 3: Results, 4: Thank You
   const [step, setStep] = useState(0);
+  // Quiz answers state managed in App, can be stored for future use
+  const [quizAnswers, setQuizAnswers] = useState(null);
 
   const steps = [
     'Welcome',
@@ -211,7 +207,16 @@ function App() {
   // Navigation functions
   const goNext = () => setStep((prev) => Math.min(prev + 1, steps.length - 1));
   const goBack = () => setStep((prev) => Math.max(prev - 1, 0));
-  const restart = () => setStep(0);
+  const restart = () => {
+    setQuizAnswers(null);
+    setStep(0);
+  };
+
+  // Handler to complete quiz and store answers, move to next step
+  function handleQuizComplete(answers) {
+    setQuizAnswers(answers);
+    goNext();
+  }
 
   return (
     <div className="app">
@@ -232,7 +237,12 @@ function App() {
         <div className="container">
           <FlowProgressBar step={step} steps={steps} />
           {step === 0 && <WelcomeStep onNext={goNext} />}
-          {step === 1 && <QuizStep onNext={goNext} onBack={goBack} />}
+          {step === 1 && (
+            <QuizStep
+              onBack={goBack}
+              onQuizComplete={handleQuizComplete}
+            />
+          )}
           {step === 2 && <ContractUploadStep onNext={goNext} onBack={goBack} />}
           {step === 3 && <ResultsDashboardStep onNext={goNext} onBack={goBack} />}
           {step === 4 && <ThankYouStep onRestart={restart} />}
