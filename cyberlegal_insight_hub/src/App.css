@@ -32,6 +32,73 @@ body {
   width: 100%;
 }
 
+/* --- Welcome Screen Enhancements --- */
+.welcome-hero {
+  padding-top: 88px;
+  padding-bottom: 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: welcomeFadeIn 0.8s cubic-bezier(.65,1.41,.62,1);
+}
+
+@keyframes welcomeFadeIn {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: none;}
+}
+
+.avatar-illustration-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.avatar-illustration {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--base-light) 30%, #2563eb 100%);
+  box-shadow: 0 4px 24px 0 rgba(0,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-illustration span[role="img"] {
+  position: relative;
+  z-index: 2;
+}
+
+.avatar-bg-decoration {
+  position: absolute;
+  z-index: 1;
+  width: 84px;
+  height: 84px;
+  left: 8px;
+  top: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.11);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.welcome-cta {
+  margin-top: 12px;
+  font-size: 1.22rem;
+  letter-spacing: 0.01em;
+  min-width: 185px;
+  box-shadow: 0 1px 10px 0 rgba(0,255,255,0.10);
+  transition: background 0.18s;
+}
+
+/* --- End Welcome Screen --- */
+
 .step-actions {
   display: flex;
   gap: 18px;
