@@ -2,8 +2,11 @@ import React, { useState } from "react";
 
 /**
  * ResultsDashboard.js
- * Dashboard showing calculated risk scores and interactive tabs for tips, contract summary, and action plan.
- * Can be expanded to support additional dashboard elements.
+ * Dashboard showing calculated risk scores as cards and interactive tabs:
+ * - Score cards for Cyber Hygiene, Contractual Risk, and Unified Safety Index
+ * - Tabs for actionable tips, contract summary, and action plan
+ * - Stubbed section for future AI conversational advice and risk simulations
+ * 
  * Props:
  *   cyberScore (integer 0-100)
  *   contractScore (integer 0-100)
@@ -13,7 +16,7 @@ import React, { useState } from "react";
  *   userTips (array of string), contractSummary (string), actionPlan (array of string)
  */
 
-// Score color/label utility (keep in sync with App.js if needed)
+// Utility to compute color+label for score level (to keep in sync with main app logic)
 function scoreLevel(score) {
   if (score == null) return { color: "#aaa", label: "Unknown" };
   if (score > 80) return { color: "#00ffbb", label: "Excellent" };
@@ -34,7 +37,7 @@ function ResultsDashboard({
   contractSummary = "",
   actionPlan = [],
 }) {
-  // Tab states
+  // Tab UI states
   const tabs = [
     { id: "tips", label: "User Tips" },
     { id: "contract", label: "Contract Summary" },
@@ -42,12 +45,12 @@ function ResultsDashboard({
   ];
   const [activeTab, setActiveTab] = useState("tips");
 
-  // Prepare level/color info
+  // Use scored level/color
   const cyber = scoreLevel(cyberScore);
   const contract = scoreLevel(contractScore);
   const unified = scoreLevel(unifiedScore);
 
-  // Demo stub content
+  // Fallback content for demonstration if props are empty
   const mockUserTips =
     userTips.length > 0
       ? userTips
@@ -159,7 +162,7 @@ function ResultsDashboard({
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs for actionable info, summary, plan */}
         <div style={{ margin: "28px auto 0 auto", width: "100%", maxWidth: 570 }}>
           <nav
             style={{
@@ -234,7 +237,7 @@ function ResultsDashboard({
           </div>
         </div>
 
-        {/* Expandable: Area for further interactive dashboard widgets */}
+        {/* Stub for future: Interactive widgets (AI tips, simulation) */}
         <div style={{ marginTop: 21, color: "#6dffe9" }}>
           <span style={{
             fontSize: "0.96rem",
