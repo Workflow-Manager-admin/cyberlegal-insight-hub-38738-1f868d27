@@ -350,20 +350,8 @@ function ResultsDashboard({
           onSend={null} // Passing no-op, to be implemented with backend
         />
 
-        {/* Stub for future: Interactive widgets (AI tips, simulation) */}
-        <div style={{ marginTop: 21, color: "#6dffe9" }}>
-          <span style={{
-            fontSize: "0.96rem",
-            background: "#001136",
-            borderRadius: 5,
-            padding: "2px 7px",
-            marginRight: 7,
-            opacity: 0.85,
-          }}>Interactive</span>
-          <span style={{ fontSize: "0.99rem", opacity: 0.8 }}>
-            More simulation widgets coming soon!
-          </span>
-        </div>
+        {/* --- Simulated Interactive Widgets --- */}
+        <SimulatedWidgetsSection />
 
         <div className="step-actions" style={{ marginTop: 30 }}>
           {onBack && (
@@ -379,6 +367,239 @@ function ResultsDashboard({
         </div>
       </div>
     </section>
+  );
+}
+
+// --- Simulated Widgets Section (POPUP UI & Logic for Simulation Widgets) ---
+function SimulatedWidgetsSection() {
+  // State for widget interactions
+  const [phishingOpen, setPhishingOpen] = useState(false);
+  const [redFlagOpen, setRedFlagOpen] = useState(false);
+  return (
+    <div style={{ marginTop: 30, color: "#6dffe9", width: "100%", maxWidth: 620, marginLeft: "auto", marginRight: "auto" }}>
+      <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+        <button
+          style={{
+            background: "#033246",
+            border: "1.1px solid var(--base-light)",
+            borderRadius: 7,
+            color: "#e6fbff",
+            padding: "11px 20px",
+            fontWeight: 600,
+            fontSize: "1.09rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 7px 0 rgba(3,230,255,0.08)",
+            marginBottom: 6,
+            transition: "background 0.18s",
+            outline: "none",
+            display: "flex",
+            alignItems: "center"
+          }}
+          onClick={() => setPhishingOpen(true)}
+          aria-haspopup="dialog"
+          aria-expanded={phishingOpen}
+        >
+          🦠&nbsp; Simulated Phishing Email Preview
+        </button>
+        <button
+          style={{
+            background: "#2f0032",
+            border: "1.1px solid #fc6eff",
+            borderRadius: 7,
+            color: "#ffe6fe",
+            padding: "11px 20px",
+            fontWeight: 600,
+            fontSize: "1.09rem",
+            cursor: "pointer",
+            boxShadow: "0 2px 7px 0 rgba(252,110,255,0.10)",
+            marginBottom: 6,
+            transition: "background 0.18s",
+            outline: "none",
+            display: "flex",
+            alignItems: "center"
+          }}
+          onClick={() => setRedFlagOpen(true)}
+          aria-haspopup="dialog"
+          aria-expanded={redFlagOpen}
+        >
+          ⚠️&nbsp; Clause Red-Flag Pop-up
+        </button>
+      </div>
+      <div style={{ fontSize: "0.99rem", opacity: 0.8, marginTop: 10 }}>
+        Interact with simulated scenarios below to learn real-world red flags!
+      </div>
+      {phishingOpen && <PhishingPreviewModal onClose={() => setPhishingOpen(false)} />}
+      {redFlagOpen && <ClauseRedFlagPopover onClose={() => setRedFlagOpen(false)} />}
+    </div>
+  );
+}
+
+function PhishingPreviewModal({ onClose }) {
+  // Modal overlay with a demo phishing email
+  return (
+    <div style={{
+      position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+      background: "rgba(0,0,32,0.83)", zIndex: 1100, display: "flex", alignItems: "center", justifyContent: "center"
+    }}>
+      <div style={{
+        background: "#192f42",
+        border: "2px solid #00ffff",
+        borderRadius: 14,
+        width: "98%", maxWidth: 420,
+        padding: "28px 24px 24px 24px",
+        color: "#e6fbff",
+        boxShadow: "0 4px 38px 0 rgba(0,255,255,0.17)"
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 15 }}>
+          <span style={{ color: "#00ffff", fontWeight: 700, fontSize: "1.22rem" }}>Simulated Phishing Email</span>
+          <button
+            onClick={onClose}
+            style={{
+              background: "none", border: "none", color: "#68f5ea", fontSize: 24, cursor: "pointer",
+              marginLeft: 10, fontWeight: 400
+            }}
+            aria-label="Close phishing preview"
+          >×</button>
+        </div>
+        <div
+          style={{
+            background: "#112232",
+            borderRadius: 8,
+            padding: "20px 12px 13px 14px",
+            marginBottom: 12,
+            border: "1px solid #00ffff22"
+          }}
+        >
+          <div style={{ color: "#fc6", fontWeight: 600, fontSize: "1.04em", marginBottom: 3 }}>From: "Security Alert" &lt;noreply-support@micros0ft-secure.com&gt;</div>
+          <div style={{ color: "#aaa", fontWeight: 500, fontSize: "0.99em", marginBottom: 6 }}>Subject: 🚨 Action Required: Your Account Will Be Locked</div>
+          <div style={{ marginTop: 7, fontFamily: "monospace", whiteSpace: "pre-line", fontSize: "1.01em" }}>
+            Dear user,
+
+            Our records indicate unusual activity in your account.
+            Please verify your details immediately to avoid suspension.
+
+            <a href="#" style={{
+              color: "#00ffff", textDecoration: "underline", background: "#085477", borderRadius: 3,
+              padding: "1.5px 7px", fontWeight: 500
+            }}>
+              Click here to verify your account
+            </a>
+
+            Failure to act within 24 hours will result in account lockout.
+
+            Sincerely,<br />
+            The Security Team
+          </div>
+          <div style={{
+            marginTop: 11,
+            color: "#ff4f55",
+            fontWeight: 670,
+            fontSize: "0.99em"
+          }}>
+            <span role="img" aria-label="red flag">🚩</span> <b>Red Flags:</b> Urgent threats, nonstandard sender email, and suspicious links!
+          </div>
+        </div>
+        <div style={{textAlign:"right"}}>
+          <button
+            style={{
+              marginTop: 3,
+              background: "#00ffff",
+              border: "none",
+              color: "#001136",
+              padding: "9px 24px",
+              borderRadius: 7,
+              fontWeight: 600,
+              fontSize: "1.09rem",
+              cursor: "pointer",
+              boxShadow:"0 1px 8px 0 rgba(0,255,255,0.13)",
+              outline: "none"
+            }}
+            onClick={onClose}
+          >Close</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClauseRedFlagPopover({ onClose }) {
+  // Simple popover showing risky contract language and a hint explanation
+  return (
+    <div style={{
+      position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+      background: "rgba(22,0,22,0.76)", zIndex: 1100, display: "flex", alignItems: "center", justifyContent: "center"
+    }}>
+      <div style={{
+        background: "#31072b",
+        border: "2px solid #fc6eff",
+        borderRadius: 14,
+        width: "98%", maxWidth: 420,
+        padding: "26px 23px 20px 23px",
+        color: "#fde7ff",
+        boxShadow: "0 4px 32px 0 rgba(252,110,255,0.17)"
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 11 }}>
+          <span style={{ color: "#fc6eff", fontWeight: 700, fontSize: "1.15rem" }}>Clause Red-Flag Pop-up</span>
+          <button
+            onClick={onClose}
+            style={{
+              background: "none", border: "none", color: "#fd8eff", fontSize: 22, cursor: "pointer",
+              marginLeft: 10, fontWeight: 400
+            }}
+            aria-label="Close clause flag popover"
+          >×</button>
+        </div>
+        <div
+          style={{
+            background: "#3c1a35",
+            borderRadius: 8,
+            padding: "18px 12px 13px 13px",
+            border: "1.2px solid #fc6eff33",
+            marginBottom: 10,
+            color: "#ffe6fe"
+          }}
+        >
+          <div style={{ fontSize: "0.99em", fontWeight: 500, marginBottom: 4 }}>
+            <span style={{ color: "#ff4f55", fontWeight: 700, marginRight: 5 }}>⚠️ Example:</span>
+            "The client shall <b>indemnify</b> and hold harmless the service provider from any and all liability, damages, or claims..."
+          </div>
+          <div style={{
+            marginTop: 8,
+            color: "#ffb6ff",
+            fontWeight: 600,
+            fontSize: "1.00em"
+          }}>
+            <span role="img" aria-label="magnifier">🔍</span> <b>Watch For:</b> Terms like <b>"indemnify"</b>, <b>"liability"</b>, <b>"arbitration"</b> &amp; one-sided responsibilities.
+          </div>
+          <div style={{
+            marginTop: 7,
+            color: "#62ffdd",
+            fontWeight: 500,
+            fontSize: "0.98em"
+          }}>
+            Why care? These clauses can mean you’re taking on extra risk or cost. Consider getting clarification or negotiating for more balanced terms.
+          </div>
+        </div>
+        <div style={{textAlign:"right"}}>
+          <button
+            style={{
+              marginTop: 3,
+              background: "#fc6eff",
+              border: "none",
+              color: "#20062a",
+              padding: "9px 24px",
+              borderRadius: 7,
+              fontWeight: 600,
+              fontSize: "1.09rem",
+              cursor: "pointer",
+              boxShadow:"0 1px 8px 0 rgba(220, 110, 255, 0.18)",
+              outline: "none"
+            }}
+            onClick={onClose}
+          >Close</button>
+        </div>
+      </div>
+    </div>
   );
 }
 
