@@ -26,6 +26,7 @@ function scoreLevel(score) {
   return { color: "#ff5e5b", label: "High Risk" };
 }
 
+import EducationCenter from "./EducationCenter";
 // PUBLIC_INTERFACE
 function ResultsDashboard({
   cyberScore,
@@ -42,6 +43,7 @@ function ResultsDashboard({
     { id: "tips", label: "User Tips" },
     { id: "contract", label: "Contract Summary" },
     { id: "action", label: "Action Plan" },
+    { id: "education", label: "Education Center" },
   ];
   const [activeTab, setActiveTab] = useState("tips");
 
@@ -339,6 +341,9 @@ function ResultsDashboard({
                   </li>
                 ))}
               </ol>
+            )}
+            {activeTab === "education" && (
+              <EducationCenter />
             )}
           </div>
         </div>
