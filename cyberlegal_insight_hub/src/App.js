@@ -2,9 +2,93 @@ import React, { useState } from 'react';
 import './App.css';
 
 /**
+ * ProgressBar and stepper for visualizing app flow steps.
+ */
+function FlowProgressBar({ step, steps }) {
+  const pct = (step / (steps.length - 1)) * 100;
+  return (
+    <div style={{ margin: '32px auto 18px auto', maxWidth: 600, width: '100%' }}>
+      <ol
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: 0,
+          margin: 0,
+          listStyle: 'none',
+        }}
+      >
+        {steps.map((label, idx) => (
+          <li
+            key={label}
+            style={{
+              flex: 1,
+              textAlign: 'center',
+              color:
+                step === idx
+                  ? 'var(--base-light)'
+                  : idx < step
+                  ? '#6ee7b7'
+                  : 'var(--text-secondary)',
+              fontWeight: step === idx ? 600 : 400,
+              fontSize: idx === step ? '1.1rem' : '1rem',
+            }}
+          >
+            <div
+              style={{
+                display: 'inline-block',
+                padding: '2px 6px',
+                borderRadius: 12,
+                background:
+                  step === idx
+                    ? 'var(--base-light)'
+                    : idx < step
+                    ? 'rgba(110,231,183,0.18)'
+                    : 'rgba(255,255,255,0.03)',
+                color: step === idx ? '#001136' : undefined,
+                minWidth: 25,
+                marginBottom: 2,
+                fontSize: 15,
+              }}
+            >
+              {idx + 1}
+            </div>
+            <div style={{ fontSize: 13, lineHeight: 1.22, marginTop: 2 }}>{label}</div>
+          </li>
+        ))}
+      </ol>
+      <div
+        style={{
+          marginTop: 12,
+          marginLeft: '2%',
+          marginRight: '2%',
+          height: 6,
+          background: 'var(--border-color)',
+          borderRadius: 3,
+          position: 'relative',
+          width: '96%',
+        }}
+      >
+        <div
+          style={{
+            height: 6,
+            borderRadius: 3,
+            background: 'linear-gradient(90deg,#00ffff,#2563eb 80%)',
+            width: `${pct}%`,
+            transition: 'width 0.44s cubic-bezier(.48,1.56,.68,1.01)',
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            zIndex: 2,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/**
  * Placeholder components for each step of the multi-step flow.
  */
-
 function WelcomeStep({ onNext }) {
   return (
     <section className="step-page">
@@ -85,13 +169,24 @@ function ThankYouStep({ onRestart }) {
   );
 }
 
+/**
+ * CyberLegal Insight Hub Main Container – step flow + progress indicator.
+ */
 // PUBLIC_INTERFACE
 function App() {
-  // 0: Welcome, 1: Quiz, 2: Contract Upload, 3: Results, 4: Thank you
+  // 0: Welcome, 1: Quiz, 2: Contract Upload, 3: Results, 4: Thank You
   const [step, setStep] = useState(0);
 
+  const steps = [
+    'Welcome',
+    'Quiz',
+    'Contract Upload',
+    'Results',
+    'Thank You'
+  ];
+
   // Navigation functions
-  const goNext = () => setStep((prev) => Math.min(prev + 1, 4));
+  const goNext = () => setStep((prev) => Math.min(prev + 1, steps.length - 1));
   const goBack = () => setStep((prev) => Math.max(prev - 1, 0));
   const restart = () => setStep(0);
 
@@ -112,6 +207,7 @@ function App() {
 
       <main className="main-content">
         <div className="container">
+          <FlowProgressBar step={step} steps={steps} />
           {step === 0 && <WelcomeStep onNext={goNext} />}
           {step === 1 && <QuizStep onNext={goNext} onBack={goBack} />}
           {step === 2 && <ContractUploadStep onNext={goNext} onBack={goBack} />}
