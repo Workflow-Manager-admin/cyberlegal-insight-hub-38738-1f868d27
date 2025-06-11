@@ -75,6 +75,112 @@ function ResultsDashboard({
           "Request a legal review if contracts contain 'liability' or 'indemnify'.",
         ];
 
+  // ---- ConversationalAdvisor UI stub ----
+  // PUBLIC_INTERFACE
+  function ConversationalAdvisor({ messages, isLoading, onSend }) {
+    // This stub simulates future AI chat/tips—will be replaced with GPT integration.
+    // messages: [{sender: "ai"|"user", text: string}]
+    // onSend: function to send user queries (stubbed here)
+    const [input, setInput] = useState("");
+    return (
+      <div
+        style={{
+          margin: "32px auto 0 auto",
+          background: "rgba(0,255,255,0.045)",
+          border: "1.3px solid var(--border-color)",
+          borderRadius: 10,
+          padding: "22px 19px 12px 19px",
+          maxWidth: 570,
+          boxShadow: "0 2px 18px 0 rgba(32,255,255,0.02)",
+          color: "#dffcff",
+          fontSize: "1.08rem",
+        }}
+      >
+        <div style={{fontWeight: 600, color: "#00ffff", marginBottom: 10, letterSpacing:0.02, fontSize: "1.08rem"}}>
+          Conversational Advisor <span style={{fontSize:17, marginLeft:5}}>💬</span>
+        </div>
+        <div style={{ fontSize: "1.04rem", color: "#cdf2e7", marginBottom: 10 }}>
+          {/* Placeholder description */}
+          Get personalized digital safety guidance here—ask about your results, digital risks, or contract terms!{" "}
+          <span style={{ fontStyle: "italic", color: "#4af0fa" }}>(Coming soon: AI-powered advice)</span>
+        </div>
+        <div style={{minHeight: 48, maxHeight: 128, overflowY: "auto", background:"rgba(0,255,255,0.0)", paddingBottom:8}}>
+          {(messages && messages.length > 0) ? (
+            messages.map((m, i) => (
+              <div
+                key={i}
+                style={{
+                  marginBottom: 6,
+                  textAlign: m.sender === "user" ? "right" : "left",
+                  color: m.sender === "user" ? "#aee2fb" : "#afefd6",
+                }}
+              >
+                <b style={{
+                  color: m.sender === "user" ? "#42e7f0" : "#73fbcb",
+                  paddingRight: 8,
+                  fontWeight: 500,
+                  fontSize: "0.97em"
+                }}>
+                  {m.sender === "user" ? "You" : "Kavia Advisor"}:
+                </b>
+                <span style={{wordBreak:"break-word"}}>{m.text}</span>
+              </div>
+            ))
+          ) : (
+            <div style={{ color: "#B0C8CA", fontSize: "1.01em" }}>
+              {/* Initial placeholder AI message */}
+              <span>
+                <span style={{ color: "#66ffe0" }}>Kavia Advisor:</span>
+                {" "}I'm here for your digital safety and contract questions. Try asking things like <b>"How can I improve my cyber hygiene?"</b> or <b>"What does 'indemnify' mean in my contract?"</b>
+              </span>
+            </div>
+          )}
+          {isLoading && (
+            <div style={{ color: "#fffbe6", marginTop: 8, opacity: 0.89 }}>
+              <i>🤖 Advisor is thinking...</i>
+            </div>
+          )}
+        </div>
+        <form
+          style={{ display: "flex", marginTop:10, gap:8, alignItems:"center" }}
+          onSubmit={e=>{e.preventDefault(); if(input && onSend) { onSend(input); setInput(""); } }}
+          autoComplete="off"
+        >
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder='Type a question (stub only)...'
+            style={{
+              flex:1,
+              background: "rgba(0,255,255,0.03)",
+              border: "1.1px solid var(--border-color)",
+              color: "#e6f8ff",
+              fontSize: "1.07rem",
+              borderRadius: 7,
+              padding: "8px 12px",
+              outline: "none"
+            }}
+            disabled // Input disabled until AI backend is enabled (UI only)
+          />
+          <button
+            type="submit"
+            style={{
+              minWidth:55, background: "var(--base-light)",
+              color: "#001136", border: "none", borderRadius: 7,
+              padding: "8.5px 14px", fontWeight: 600,
+              cursor: "not-allowed", opacity: 0.63, fontSize: "1.01rem"
+            }}
+            disabled
+          >Send</button>
+        </form>
+        <div style={{fontSize: "0.95em", color:"#54eaff", marginTop:6, opacity:0.85}}>
+          (Conversational AI integration is coming soon!)
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section className="step-page">
       <div className="hero">
@@ -236,6 +342,13 @@ function ResultsDashboard({
             )}
           </div>
         </div>
+
+        {/* Conversational Advisor area: ready for AI power */}
+        <ConversationalAdvisor
+          messages={[]} // no messages yet; adapted later for GPT-powered chat
+          isLoading={false}
+          onSend={null} // Passing no-op, to be implemented with backend
+        />
 
         {/* Stub for future: Interactive widgets (AI tips, simulation) */}
         <div style={{ marginTop: 21, color: "#6dffe9" }}>
